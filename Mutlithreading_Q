@@ -1,0 +1,22 @@
+import queue
+import threading
+import time
+
+def func(q,th):
+ while True:
+  task=q.get()
+  time.sleep(2)
+  q.task_done()
+  print(f'Thread #{ th }is running , #{task} is in queue')
+  
+
+q=queue.Queue()
+
+for I in range (4):
+ tsk=threading.Thread(target=func, args=(q,I,), daemon=True)
+ tsk.start()
+
+for j in range (7):
+ q.put(j)
+
+q.join()
